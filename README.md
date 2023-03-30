@@ -6,6 +6,10 @@ Installation:
 
 `npm install`
 
+Chane Mongodb Url path in .env file
+
+`DATABASE_URL`
+
 To Start Server:
 
 `npm start`
