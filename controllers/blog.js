@@ -22,13 +22,29 @@ class Blogs {
     })
 
     static getAll = asyncWrapper(async (req, res) => {
-        const posts = await Blog.find();
-        let data = Response(Constants.RESULT_CODE.OK, Constants.RESULT_FLAG.SUCCESS, '', posts);
-        return res.send(data);
+        Blog.aggregate([
+            {
+                $project: {
+                    Title: "$Title",
+                    imagePath: "$imagePath",
+                },
+            },
+        ]).then((result) => {
+            let data = Response(Constants.RESULT_CODE.OK, Constants.RESULT_FLAG.SUCCESS, '', result);
+            return res.send(data);
+        }
+        ).catch((err) => {
+            let data = Response(Constants.RESULT_CODE.ERROR, Constants.RESULT_FLAG.FAIL, err);
+            return res.send(data);
+        }
+        );
     })
 
-
-
+    static getOne = asyncWrapper(async (req, res) => {
+        const post = await Blog.findById(req.params.Id);
+        let data = Response(Constants.RESULT_CODE.OK, Constants.RESULT_FLAG.SUCCESS, '', post);
+        return res.send(data);
+    })
 
 }
 

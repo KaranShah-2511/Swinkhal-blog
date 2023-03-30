@@ -8,5 +8,7 @@ router.post('/', upload.single('image'), Blogs.create);
 
 router.get('/getAll', Blogs.getAll);
 
+router.get('/singleBlog/:Id', Blogs.getOne);
+
 
 export default router;
